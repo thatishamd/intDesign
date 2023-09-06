@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const { Api404Error, Api400Error } = require("../../utilities/customError");
 const Wallpaper = require("./wallpapers.model");
+const Product = require("../products/products.model");
 
 const getWallpapers = asyncHandler(async (req, res, next) => {
   try {
@@ -16,33 +16,38 @@ const getWallpapers = asyncHandler(async (req, res, next) => {
   }
 });
 
-const createWallpaper = asyncHandler(async (req, res, next) => {
+const createWallpapers = asyncHandler(async (req, res, next) => {
   try {
     const {
       code,
       rate,
       boxSize,
-      sizeUnit,
-      size,
+      bookName,
       dimensionUnit,
       dimensionY,
       dimensionX,
+      product,
     } = req.body;
     const wallpaperExists = await Wallpaper.findOne({ code });
+    const productFound = await Product.findOne({ name: product });
 
     if (wallpaperExists) {
       throw new Api400Error("Wallpaper with the name already exists!");
+    }
+
+    if (!productFound) {
+      throw new Api400Error("Product catagory with that name not found!");
     }
 
     wallpaper = await Wallpaper.create({
       code,
       rate,
       boxSize,
-      sizeUnit,
-      size,
+      bookName,
       dimensionUnit,
       dimensionX,
       dimensionY,
+      productID: productFound._id,
     });
 
     res.status(201).json({
@@ -55,4 +60,4 @@ const createWallpaper = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { getWallpapers, createWallpaper };
+module.exports = { getWallpapers, createWallpapers };

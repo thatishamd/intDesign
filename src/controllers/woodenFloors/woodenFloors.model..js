@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const wallpaperSchema = mongoose.Schema(
+const woodenFloorsSchema = mongoose.Schema(
   {
     code: {
       required: true,
@@ -23,9 +23,17 @@ const wallpaperSchema = mongoose.Schema(
       required: true,
       type: String,
     },
-    bookName: {
+    size: {
+      required: true,
+      type: Number,
+    },
+    sizeUnit: {
       required: true,
       type: String,
+    },
+    boxSize: {
+      required: true,
+      type: Number,
     },
     rate: {
       required: true,
@@ -42,5 +50,5 @@ const wallpaperSchema = mongoose.Schema(
   }
 );
 
-const Wallpaper = mongoose.model("Wallpaper", wallpaperSchema);
-module.exports = Wallpaper;
+const WoodenFloor = mongoose.model("WoodenFloors", woodenFloorsSchema);
+module.exports = WoodenFloor;

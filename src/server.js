@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 var cors = require("cors");
 const productRoutes = require("./routes/products.routes");
+const woodenFloorRoutes = require("./routes/woodenFloors.routes");
 const wallpaperRoutes = require("./routes/wallpaper.routes");
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -26,6 +27,7 @@ app.get("/ping", (request, response) => {
 
 // Setting up routes
 app.use("/api/products", productRoutes);
+app.use("/api/woodenFloors", woodenFloorRoutes);
 app.use("/api/wallpapers", wallpaperRoutes);
 
 app.use(errorHandler);
